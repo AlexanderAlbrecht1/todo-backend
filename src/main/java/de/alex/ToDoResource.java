@@ -2,10 +2,10 @@ package de.alex;
 
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
@@ -18,6 +18,15 @@ public class ToDoResource {
     public List<ToDoEntity> getAllToDos() {
     return ToDoEntity.listAll();
 }
+
+@POST
+@Transactional
+@Consumes(MediaType.APPLICATION_JSON)
+    public Response createToDo(ToDoEntity toDoEntity) {
+    toDoEntity.persist();
+    return Response.status(Response.Status.CREATED).entity(toDoEntity).build();
+}
+
 
 
 }

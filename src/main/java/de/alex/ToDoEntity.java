@@ -7,8 +7,7 @@ import java.time.LocalDate;
 
 @Entity
 public class ToDoEntity extends PanacheEntity {
-    Long id;
-    String task;
-    boolean done;
-    LocalDate date;
+    public String task;
+    public boolean done;
+    public LocalDate date;
 }
