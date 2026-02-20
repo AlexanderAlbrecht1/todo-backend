@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import java.time.LocalDate;
 
 @Entity
+
 public class ToDoEntity extends PanacheEntity {
     public String task;
     public boolean done;

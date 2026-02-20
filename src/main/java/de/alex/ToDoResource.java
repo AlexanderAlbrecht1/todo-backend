@@ -1,7 +1,9 @@
 package de.alex;
 
+import io.vertx.core.http.HttpServerResponse;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -17,7 +19,14 @@ import java.util.List;
 
 public class ToDoResource {
 
-@GET
+    private final HttpServerResponse httpServerResponse;
+
+    @Inject
+    public ToDoResource(HttpServerResponse httpServerResponse) {
+        this.httpServerResponse = httpServerResponse;
+    }
+
+    @GET
     public List<ToDoEntity> getAllToDos() {
         return ToDoEntity.listAll();
     }
@@ -34,6 +43,19 @@ public class ToDoResource {
     public Response createToDo(ToDoEntity toDoEntity) {
         toDoEntity.persist();
         return Response.status(Response.Status.CREATED).entity(toDoEntity).build();
+    };
+
+@PATCH
+@Path("/{id}")
+@Transactional
+    public Response updateToDo(@PathParam("id") Long id,ToDoEntity toDoEntity) {
+    ToDoEntity entity = ToDoEntity.findById(id);
+    if (entity == null) {
+        return Response.status(404).build();
     }
+    entity.done = toDoEntity.done;
+    return Response.status(204).build();
+}
+
 
 }
