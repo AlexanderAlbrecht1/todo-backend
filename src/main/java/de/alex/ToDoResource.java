@@ -57,5 +57,16 @@ public class ToDoResource {
     return Response.status(204).build();
 }
 
+@DELETE
+@Path("/{id}")
+@Transactional
+    public Response deleteToDo(@PathParam("id") Long id) {
+    ToDoEntity entity = ToDoEntity.findById(id);
+    if (entity == null) {
+        return Response.status(404).build();
+    }
+    entity.delete();
+    return Response.status(200).build();
+}
 
 }
