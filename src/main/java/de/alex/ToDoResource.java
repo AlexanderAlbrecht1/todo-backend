@@ -3,7 +3,6 @@ package de.alex;
 import io.vertx.core.http.HttpServerResponse;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -18,13 +17,6 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 
 public class ToDoResource {
-
-    private final HttpServerResponse httpServerResponse;
-
-    @Inject
-    public ToDoResource(HttpServerResponse httpServerResponse) {
-        this.httpServerResponse = httpServerResponse;
-    }
 
     @GET
     public List<ToDoEntity> getAllToDos() {
