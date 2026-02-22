@@ -1,8 +1,7 @@
 package de.alex;
 
-import io.vertx.core.http.HttpServerResponse;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -15,6 +14,7 @@ import java.util.List;
 @Path("/todo")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@RolesAllowed("user")
 
 public class ToDoResource {
 
@@ -35,7 +35,7 @@ public class ToDoResource {
     public Response createToDo(ToDoEntity toDoEntity) {
         toDoEntity.persist();
         return Response.status(Response.Status.CREATED).entity(toDoEntity).build();
-    };
+    }
 
 @PATCH
 @Path("/{id}")
