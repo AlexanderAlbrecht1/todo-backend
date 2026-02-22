@@ -17,13 +17,14 @@ import java.util.List;
 @RolesAllowed("user")
 
 public class ToDoResource {
-
-    @GET
-    public List<ToDoEntity> getAllToDos() {
-        return ToDoEntity.listAll();
+@GET
+@RolesAllowed({"read_only","user"})
+public List<ToDoEntity> getAllToDos() {
+    return ToDoEntity.listAll();
     }
 
 @GET
+@RolesAllowed({"read_only","user"})
 @Path("/{id}")
     public ToDoEntity getSingleToDo(@PathParam("id") Long id) {
         ToDoEntity entity = ToDoEntity.findById(id);
